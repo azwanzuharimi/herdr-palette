@@ -1,0 +1,14 @@
+{
+  "name": "herdr-palette",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Raycast-style command palette for Herdr",
+  "scripts": {
+    "start": "bun src/cli.ts",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": { "@types/bun": "latest" },
+  "peerDependencies": { "typescript": "^5" },
+  "dependencies": {}
+}

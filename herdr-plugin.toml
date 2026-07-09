@@ -1,0 +1,20 @@
+id = "azwan.herdr-palette"
+name = "Herdr Palette"
+version = "0.1.0"
+min_herdr_version = "0.7.0"
+description = "Raycast-style fuzzy command palette for Herdr"
+platforms = ["linux", "macos"]
+
+[[actions]]
+id = "open"
+title = "Open Command Palette"
+contexts = ["pane", "tab", "workspace"]
+command = ["bash", "bin/open.sh"]
+
+[[panes]]
+id = "palette"
+title = "Command Palette"
+# overlay = a popup over the active pane that DOES receive client keyboard.
+# split/type=pane panes render but never get the client's input in herdr 0.7.3.
+placement = "overlay"
+command = ["bun", "src/cli.ts", "commands"]
