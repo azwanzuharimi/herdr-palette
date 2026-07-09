@@ -1,18 +1,13 @@
 # herdr-palette
 
+[![CI](https://github.com/azwanzuharimi/herdr-palette/actions/workflows/ci.yml/badge.svg)](https://github.com/azwanzuharimi/herdr-palette/actions/workflows/ci.yml)
+
 A Raycast-style, fuzzy-searchable command palette for [Herdr](https://herdr.dev).
 Press a key, get a popup, type to filter herdr commands by name **or** key hint,
 `Enter` to run. Built on the polished TUI engine from
 [tmux-palette](https://github.com/), retargeted to drive Herdr via its CLI.
 
-```
-Herdr                                                    esc
-▌ spl
-  Panes
-▌     Split Right                                    prefix+v
-      Split Down                                     prefix+-
-  󰁍  Focus Left                                      prefix+h
-```
+![herdr-palette screenshot](assets/screenshot.svg)
 
 ## Requirements
 

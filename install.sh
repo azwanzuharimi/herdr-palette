@@ -17,6 +17,11 @@ HERDR="${HERDR_BIN_PATH:-$(command -v herdr 2>/dev/null || true)}"
 [ -n "$HERDR" ] || { echo "error: herdr not found on PATH (or set HERDR_BIN_PATH)"; exit 1; }
 command -v bun >/dev/null 2>&1 || { echo "error: bun not found — install from https://bun.sh"; exit 1; }
 
+# Reject anything but herdr key tokens, so KEY can't inject into config.toml.
+if ! printf '%s' "$KEY" | grep -Eq '^[A-Za-z0-9?+._-]+$'; then
+  echo "error: key '$KEY' has unexpected characters; expected e.g. prefix+space"; exit 1
+fi
+
 if [ "$KEY" = "prefix+?" ]; then
   echo "note: prefix+? is herdr's native keybinds window; either pick another key"
   echo "      or add '[keys]' with 'help = \"\"' to your config to free it."

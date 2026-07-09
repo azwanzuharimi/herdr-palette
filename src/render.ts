@@ -1,4 +1,4 @@
-import { charWidth, displayWidth, truncate } from "./text"
+import { charWidth, displayWidth, sanitize, truncate } from "./text"
 import type { Colors, Item } from "./types"
 
 function hexToFg(hex: string): string | null {
@@ -46,7 +46,7 @@ export function buildRows(vis: Item[], grouped: boolean, filtered: boolean): Row
 }
 
 export function renderCategory(category: string, colors: Colors, rowBg: string): string {
-  return `${colors.accent}${colors.bold}${category}${colors.reset}${rowBg}`
+  return `${colors.accent}${colors.bold}${sanitize(category)}${colors.reset}${rowBg}`
 }
 
 function aliasChip(item: Item, colors: Colors, rowBg: string): { styled: string; width: number } {
@@ -66,14 +66,15 @@ function aliasChip(item: Item, colors: Colors, rowBg: string): { styled: string;
 
 function descriptionFragment(item: Item, colors: Colors, rowBg: string): { styled: string; width: number } {
   if (!item.description) return { styled: "", width: 0 }
+  const desc = sanitize(item.description)
   return {
-    styled: `${colors.muted} - ${item.description}${colors.reset}${rowBg}`,
-    width: 3 + item.description.length,
+    styled: `${colors.muted} - ${desc}${colors.reset}${rowBg}`,
+    width: 3 + desc.length,
   }
 }
 
 function shortcutFragment(item: Item, colors: Colors, active: boolean, rowBg: string): { styled: string; text: string } {
-  const text = item.shortcut ?? ""
+  const text = sanitize(item.shortcut ?? "")
   if (!text) return { styled: "", text }
   const color = active ? colors.accent : colors.muted
   return { styled: `${color}${text}${colors.reset}${rowBg}`, text }
@@ -85,8 +86,9 @@ export function renderDefaultItem(item: Item, colors: Colors, active: boolean, b
   const iconGlyph = item.icon || " "
   const iconColor = (item.iconColor && hexToFg(item.iconColor)) || colors.accent
   const icon = item.icon ? `${iconColor}${item.icon}${colors.reset}${rowBg}` : " "
+  const safeTitle = sanitize(item.title)
   const titleStyle = active ? colors.bold + colors.fg : colors.muted
-  const titleStyled = `${titleStyle}${item.title}${colors.reset}${rowBg}`
+  const titleStyled = `${titleStyle}${safeTitle}${colors.reset}${rowBg}`
 
   const chip = aliasChip(item, colors, rowBg)
   const desc = descriptionFragment(item, colors, rowBg)
@@ -94,7 +96,7 @@ export function renderDefaultItem(item: Item, colors: Colors, active: boolean, b
 
   const leftStyled = `${marker} ${icon}  ${titleStyled}${chip.styled}${desc.styled}`
   const leftPlainW =
-    1 + 1 + charWidth(iconGlyph) + 2 + displayWidth(item.title) + chip.width + desc.width
+    1 + 1 + charWidth(iconGlyph) + 2 + displayWidth(safeTitle) + chip.width + desc.width
 
   const gap = Math.max(1, bodyWidth - leftPlainW - sc.text.length)
   return leftStyled + " ".repeat(gap) + sc.styled

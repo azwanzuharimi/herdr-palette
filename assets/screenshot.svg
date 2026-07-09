@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="540" viewBox="0 0 780 540" font-family="ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="15">
+<rect x="0" y="0" width="780" height="540" rx="12" fill="#16161e"/>
+<rect x="0" y="0" width="780" height="540" rx="12" fill="none" stroke="#7aa2f7" stroke-opacity="0.35"/>
+<text x="26" y="35" fill="#c0caf5" font-weight="700">Herdr</text>
+<text x="754" y="35" fill="#565f89" text-anchor="end">esc</text>
+<text x="26" y="61" fill="#7aa2f7">▌ </text>
+<text x="44" y="61" fill="#565f89">Search</text>
+<text x="26" y="113" fill="#7aa2f7" font-weight="700" letter-spacing="0.5">Workspaces</text>
+<rect x="10" y="121" width="760" height="26" rx="6" fill="#292e42"/>
+<rect x="14" y="123" width="3" height="22" rx="1.5" fill="#7aa2f7"/>
+<text x="40" y="139" fill="#c0caf5">Switch Workspace…</text>
+<text x="754" y="139" fill="#565f89" text-anchor="end">prefix+w</text>
+<text x="40" y="165" fill="#c0caf5">New Workspace</text>
+<text x="754" y="165" fill="#565f89" text-anchor="end">prefix+shift+n</text>
+<text x="40" y="191" fill="#c0caf5">Rename Workspace…</text>
+<text x="754" y="191" fill="#565f89" text-anchor="end">prefix+shift+w</text>
+<text x="40" y="217" fill="#c0caf5">Close Workspace</text>
+<text x="754" y="217" fill="#565f89" text-anchor="end">prefix+shift+d</text>
+<text x="26" y="243" fill="#7aa2f7" font-weight="700" letter-spacing="0.5">Tabs</text>
+<text x="40" y="269" fill="#c0caf5">Switch Tab…</text>
+<text x="754" y="269" fill="#565f89" text-anchor="end">prefix+1..9</text>
+<text x="40" y="295" fill="#c0caf5">New Tab</text>
+<text x="754" y="295" fill="#565f89" text-anchor="end">prefix+c</text>
+<text x="40" y="321" fill="#c0caf5">Previous Tab / Next Tab</text>
+<text x="754" y="321" fill="#565f89" text-anchor="end">prefix+p / prefix+n</text>
+<text x="26" y="347" fill="#7aa2f7" font-weight="700" letter-spacing="0.5">Panes</text>
+<text x="40" y="373" fill="#c0caf5">Split Right</text>
+<text x="754" y="373" fill="#565f89" text-anchor="end">prefix+v</text>
+<text x="40" y="399" fill="#c0caf5">Focus Left / Right / Up / Down</text>
+<text x="754" y="399" fill="#565f89" text-anchor="end">prefix+h j k l</text>
+<text x="40" y="425" fill="#c0caf5">Zoom / Unzoom</text>
+<text x="754" y="425" fill="#565f89" text-anchor="end">prefix+z</text>
+<text x="40" y="451" fill="#c0caf5">Close Pane</text>
+<text x="754" y="451" fill="#565f89" text-anchor="end">prefix+x</text>
+<text x="26" y="503" fill="#565f89">enter select   up/down move   24 commands</text>
+</svg>

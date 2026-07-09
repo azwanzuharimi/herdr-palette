@@ -15,6 +15,19 @@ function strip(s: string): string {
   return s.replace(/\x1b\[[0-9;]*m/g, "")
 }
 
+// Remove terminal escape sequences and control characters from untrusted
+// display strings. Agent/tab/workspace names come from `herdr … list` and an
+// agent can rename itself; written to the terminal raw, an OSC-52 or cursor
+// sequence could poison the clipboard or spoof palette rows. Applied to every
+// displayed field at render time.
+export function sanitize(s: string): string {
+  return s
+    .replace(/\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)/g, "") // OSC … BEL/ST
+    .replace(/\x1b[@-_][0-?]*[ -/]*[@-~]/g, "")        // CSI / Fe escape sequences
+    .replace(/\x1b/g, "")                               // any remaining lone ESC
+    .replace(/[\x00-\x1f\x7f-\x9f]/g, "")               // stray C0/C1 control chars + DEL
+}
+
 function isWide(code: number): boolean {
   return WIDE_RANGES.some(([lo, hi]) => code >= lo && code <= hi)
 }
