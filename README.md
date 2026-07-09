@@ -23,23 +23,32 @@ Herdr                                                    esc
 
 ```bash
 git clone https://github.com/<owner>/herdr-palette ~/Sites/herdr-palette
-cd ~/Sites/herdr-palette && bun install
-herdr plugin link ~/Sites/herdr-palette      # or: herdr plugin install <owner>/herdr-palette
+cd ~/Sites/herdr-palette
+./install.sh              # links plugin + adds prefix+space keybind + reloads
+#   ./install.sh prefix+g   to bind a different key
 ```
 
-Add a keybinding in `~/.config/herdr/config.toml`:
+Then **detach + reattach** (`prefix+q`, then `herdr`) for the keybind to apply —
+herdr caches keybindings at client-attach, so a reload alone won't update an
+already-attached client. The installer is idempotent (safe to re-run).
 
+<details><summary>Manual install</summary>
+
+```bash
+bun install
+herdr plugin link ~/Sites/herdr-palette      # or: herdr plugin install <owner>/herdr-palette
+```
+Add to `~/.config/herdr/config.toml` (any valid key; `prefix+?` collides with the
+native help window):
 ```toml
 [[keys.command]]
-key = "prefix+space"          # any valid key; prefix+? conflicts with the native help window
+key = "prefix+space"
 type = "plugin_action"
 command = "azwan.herdr-palette.open"
 description = "Command palette"
 ```
-
-> **Reattach to apply.** Herdr caches keybindings at client-attach time, so after
-> editing the keybind you must detach and reattach (`prefix+q`, then `herdr`) — a
-> `server reload-config` alone won't update an already-attached client.
+Then `herdr server reload-config` and reattach.
+</details>
 
 ## Use
 

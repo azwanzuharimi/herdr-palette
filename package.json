@@ -4,6 +4,7 @@
   "type": "module",
   "description": "Raycast-style command palette for Herdr",
   "scripts": {
+    "setup": "bash install.sh",
     "start": "bun src/cli.ts",
     "test": "bun test",
     "typecheck": "tsc --noEmit"
