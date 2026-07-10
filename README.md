@@ -5,7 +5,7 @@
 A Raycast-style, fuzzy-searchable command palette for [Herdr](https://herdr.dev).
 Press a key, get a popup, type to filter herdr commands by name **or** key hint,
 `Enter` to run. Built on the polished TUI engine from
-[tmux-palette](https://github.com/), retargeted to drive Herdr via its CLI.
+[tmux-palette](https://github.com/eduwass/tmux-palette), retargeted to drive Herdr via its CLI.
 
 ![herdr-palette screenshot](assets/screenshot.svg)
 
@@ -17,24 +17,13 @@ Press a key, get a popup, type to filter herdr commands by name **or** key hint,
 ## Install
 
 ```bash
-git clone https://github.com/<owner>/herdr-palette ~/Sites/herdr-palette
-cd ~/Sites/herdr-palette
-./install.sh              # links plugin + adds prefix+space keybind + reloads
-#   ./install.sh prefix+g   to bind a different key
+herdr plugin install azwanzuharimi/herdr-palette
 ```
 
-Then **detach + reattach** (`prefix+q`, then `herdr`) for the keybind to apply —
-herdr caches keybindings at client-attach, so a reload alone won't update an
-already-attached client. The installer is idempotent (safe to re-run).
-
-<details><summary>Manual install</summary>
-
-```bash
-bun install
-herdr plugin link ~/Sites/herdr-palette      # or: herdr plugin install <owner>/herdr-palette
-```
-Add to `~/.config/herdr/config.toml` (any valid key; `prefix+?` collides with the
+**This registers the plugin but does not bind a key.** Add one to
+`~/.config/herdr/config.toml` (any valid key; `prefix+?` collides with the
 native help window):
+
 ```toml
 [[keys.command]]
 key = "prefix+space"
@@ -42,7 +31,26 @@ type = "plugin_action"
 command = "azwan.herdr-palette.open"
 description = "Command palette"
 ```
-Then `herdr server reload-config` and reattach.
+
+Then reload and **detach + reattach** — herdr caches keybindings at
+client-attach, so a reload alone won't update an already-attached client:
+
+```bash
+herdr server reload-config
+# prefix+q to detach, then `herdr` to reattach
+```
+
+<details><summary>From source (dev install)</summary>
+
+```bash
+git clone https://github.com/azwanzuharimi/herdr-palette ~/Sites/herdr-palette
+cd ~/Sites/herdr-palette
+./install.sh              # links plugin + adds prefix+space keybind + reloads
+#   ./install.sh prefix+g   to bind a different key
+```
+
+The installer is idempotent (safe to re-run). Same caveat: detach + reattach
+afterwards for the keybind to apply.
 </details>
 
 ## Use
