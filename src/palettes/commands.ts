@@ -1,5 +1,5 @@
 import type { Item, PaletteDef } from "../types"
-import { sourcePane, sourceTab, sourceWorkspace, listTabs, run } from "../herdr"
+import { sourcePane, sourceTab, sourceWorkspace, listTabs, paneCwd, run } from "../herdr"
 
 // Resolved once at launch (bin/open.sh forwards them via --env). When absent
 // (dev/test), relative ops fall back to --current and id-dependent items hide.
@@ -20,6 +20,16 @@ function focusRelativeTab(delta: number): void {
   const base = idx < 0 ? 0 : idx
   const next = tabs[(base + delta + tabs.length) % tabs.length]!
   run(["tab", "focus", next.tab_id])
+}
+
+// Without --cwd, herdr's `new_cwd = "follow"` default inherits the FOCUSED
+// pane's cwd — and while the palette is open that is this overlay, which herdr
+// spawns in the plugin's install dir. Resolve the source pane's cwd when the
+// item is selected and pass it explicitly so new workspaces/tabs open where
+// the palette was invoked from.
+function createInSourceCwd(verb: "workspace" | "tab"): void {
+  const cwd = src ? paneCwd(src) : undefined
+  run([verb, "create", "--focus", ...(cwd ? ["--cwd", cwd] : [])])
 }
 
 // Items that need a resolved source id — only shown when launched from a pane.
@@ -66,14 +76,14 @@ export const commands: PaletteDef = {
     { icon: "󰆍", category: "Workspaces", title: "Switch Workspace...", shortcut: "prefix+w",
       action: { palette: "switch-workspace" } },
     { icon: "󰐕", category: "Workspaces", title: "New Workspace", shortcut: "prefix+shift+n",
-      action: { herdr: ["workspace", "create", "--focus"] } },
+      action: { run: () => createInSourceCwd("workspace") } },
     ...renameWorkspace,
     ...closeWorkspace,
 
     { icon: "󰓩", category: "Tabs", title: "Switch Tab...", shortcut: "prefix+1..9",
       action: { palette: "switch-tab" } },
     { icon: "󰐕", category: "Tabs", title: "New Tab", shortcut: "prefix+c",
-      action: { herdr: ["tab", "create", "--focus"] } },
+      action: { run: () => createInSourceCwd("tab") } },
     ...tabNav,
     ...renameTab,
     ...closeTab,

@@ -59,6 +59,20 @@ export function listTabs(): TabRow[] {
   try { return resultOf(r.stdout).tabs ?? [] } catch { return [] }
 }
 
+/** Pick the best cwd out of an unwrapped `pane get` result: the live
+ * foreground process cwd when known, else the pane's tracked cwd. */
+export function paneCwdFromResponse(result: unknown): string | undefined {
+  const pane = (result as { pane?: { cwd?: string | null; foreground_cwd?: string | null } | null } | null)?.pane
+  return pane?.foreground_cwd || pane?.cwd || undefined
+}
+
+/** cwd of a pane via `herdr pane get`; undefined when unavailable. */
+export function paneCwd(paneId: string): string | undefined {
+  const r = run(["pane", "get", paneId])
+  if (r.status !== 0) return undefined
+  try { return paneCwdFromResponse(resultOf(r.stdout)) } catch { return undefined }
+}
+
 export type AgentRow = { agent: string; pane_id: string; agent_status: string; focused: boolean; workspace_id: string }
 export function listAgents(): AgentRow[] {
   const r = run(["agent", "list"])
